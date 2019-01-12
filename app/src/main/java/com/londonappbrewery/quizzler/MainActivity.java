@@ -49,10 +49,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState!=null)
+        {
+            score = savedInstanceState.getInt("score");
+            Index = savedInstanceState.getInt("Index");
+        }
+        else
+        {
+            score = 0;
+            Index = 0;
+        }
+
         True = findViewById(R.id.true_button);
         False = findViewById(R.id.false_button);
         quesionText = findViewById(R.id.question_text_view);
         Score = findViewById(R.id.score);
+        Score.setText("score  "+score+"/"+ mQuestionBank.length);
         progressBar = findViewById(R.id.progress_bar);
         final int PROGRESSBAR_INCREMENTED_BY = (int) Math.ceil(100/mQuestionBank.length);
         Question = mQuestionBank[Index].getQuestionId();
@@ -126,6 +138,13 @@ public class MainActivity extends Activity {
             toast = Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putInt("score",score);
+        outState.putInt("Index",Index);
     }
 
 }
